@@ -48,6 +48,7 @@ RUN sed -i "/msgid \"Chat (#blockscout)\"/{n;s/msgstr \"\"/msgstr \"Chat (#altla
 
 ENV DISABLE_READ_API='true'
 ENV DISABLE_WRITE_API='true'
+ENV LOGO=/images/altlayer_logo.png
 
 # Run forderground build and phoenix digest
 RUN mix compile

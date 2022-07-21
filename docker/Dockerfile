@@ -46,8 +46,6 @@ RUN sed -i s/"POA"/"${COIN}"/g apps/block_scout_web/priv/gettext/en/LC_MESSAGES/
 RUN sed -i "/msgid \"Chat (#blockscout)\"/{n;s/msgstr \"\"/msgstr \"Chat (#altlayer)\"/g}" apps/block_scout_web/priv/gettext/default.pot; \
     sed -i "/msgid \"Chat (#blockscout)\"/{n;s/msgstr \"\"/msgstr \"Chat (#altlayer)\"/g}" apps/block_scout_web/priv/gettext/en/LC_MESSAGES/default.po;
 
-ENV DISABLE_READ_API='true'
-ENV DISABLE_WRITE_API='true'
 ENV LOGO=/images/altlayer_logo.png
 
 # Run forderground build and phoenix digest

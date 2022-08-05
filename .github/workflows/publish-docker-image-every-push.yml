@@ -74,6 +74,8 @@ jobs:
             JSON_RPC=
             COIN_NAME=
             SUBNETWORK=
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Build and push indexer only
         uses: docker/build-push-action@v3
@@ -102,6 +104,8 @@ jobs:
             JSON_RPC=
             COIN_NAME=
             SUBNETWORK=
+          cache-from: type=local,src=/tmp/.buildx-cache-new
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       - name: Build and push webapp only
         uses: docker/build-push-action@v3
@@ -130,3 +134,12 @@ jobs:
             JSON_RPC=
             COIN_NAME=
             SUBNETWORK=
+          cache-from: type=local,src=/tmp/.buildx-cache-new
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

@@ -7,44 +7,79 @@ name: Publish Docker image
 
 on:
   push:
-    branches: [master]
+    branches: 
+    - master
+    - feat/push-image-to-ecr
 
 env:
-  REGISTRY_NAME: altregistry
   OTP_VERSION: '24.3.4.1'
   ELIXIR_VERSION: '1.13.4'
+  ECR_REGISTRY: 305587085711.dkr.ecr.us-west-2.amazonaws.com
+  ECR_REPOSITORY: blockscout
 
 jobs:
   push_to_registry:
-    name: Push Docker image to Azure Container Registry
+    name: Push docker image to registry
     runs-on: ubuntu-latest
-    env:
-      RELEASE_VERSION: 4.1.5
+    outputs:
+      short-sha: ${{ steps.output-step.outputs.short-sha }}
+
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
+    - name: Check out the repo
+      uses: actions/checkout@v3
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      
-      - name: Log in to Azure Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY_NAME }}.azurecr.io
-          username: ${{ secrets.ALTREGISTRY_USERNAME }}
-          password: ${{ secrets.ALTREGISTRY_PASSWORD }}
-      
-      - name: Get short hash
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c 1-8`" >> $GITHUB_ENV
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY_NAME }}.azurecr.io/blockscout
-      
-      - name: Build & Push Docker image
-        run: docker buildx build -t ${{ env.REGISTRY_NAME }}.azurecr.io/blockscout:latest -t ${{ env.REGISTRY_NAME }}.azurecr.io/blockscout:${{ env.SHORT_SHA }} -f ./docker/Dockerfile --push --platform=linux/amd64 .
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to ECR
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.ECR_REGISTRY }}
+        username: ${{ secrets.ECR_ACCESS_KEY_ID }}
+        password: ${{ secrets.ECR_ACCESS_KEY }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+
+    - name: Add SHORT_SHA env property with commit short sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+
+    - name: Add outputs
+      run: |
+        echo "::set-output name=short-sha::${{ env.SHORT_SHA }}"
+      id: output-step
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        push: true
+        cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache
+        cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache,mode=max
+        tags: |
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
+        build-args: |
+          CACHE_EXCHANGE_RATES_PERIOD=
+          DISABLE_READ_API=false
+          API_PATH=
+          NETWORK_PATH=
+          DISABLE_WEBAPP=false
+          DISABLE_WRITE_API=false
+          CACHE_ENABLE_TOTAL_GAS_USAGE_COUNTER=
+          WOBSERVER_ENABLED=false
+          ADMIN_PANEL_ENABLED=false
+          CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL=
+          DISABLE_BRIDGE_MARKET_CAP_UPDATER=false
+          CACHE_BRIDGE_MARKET_CAP_UPDATE_INTERVAL=
+          SOCKET_ROOT=
+
+    - name: Image digest
+      run: echo ${{ steps.blockscout_docker_build.outputs.digest }}

@@ -52,7 +52,7 @@ jobs:
 
     - name: Add outputs
       run: |
-        echo "::set-output name=short-sha::${{ env.SHORT_SHA }}"
+        echo "short-sha=${{ env.SHORT_SHA }}" >> $GITHUB_OUTPUT
       id: output-step
 
     - name: Build and push Docker image

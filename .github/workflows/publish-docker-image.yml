@@ -45,15 +45,12 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
-
-    - name: Add SHORT_SHA env property with commit short sha
-      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
-
-    - name: Add outputs
-      run: |
-        echo "short-sha=${{ env.SHORT_SHA }}" >> $GITHUB_OUTPUT
-      id: output-step
+        images: |
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+        tags: |
+          type=raw,value={{sha}}
+          type=raw,value={{branch}}-{{sha}}
+          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
@@ -61,9 +58,7 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         push: true
-        tags: |
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}
+        tags: ${{ steps.meta.outputs.tags }}
         build-args: |
           CACHE_EXCHANGE_RATES_PERIOD=
           DISABLE_READ_API=false

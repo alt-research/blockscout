@@ -61,8 +61,6 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         push: true
-        cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache
-        cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache,mode=max
         tags: |
           ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.SHORT_SHA }}

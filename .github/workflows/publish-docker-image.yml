@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Publish Docker image
+name: Build and push to registry
 
 on:
   push:
@@ -17,7 +17,7 @@ env:
   ECR_REPOSITORY: blockscout
 
 jobs:
-  push_to_registry:
+  build-and-push-to-registry:
     name: Push docker image to registry
     runs-on: ubuntu-latest
 

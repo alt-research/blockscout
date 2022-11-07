@@ -9,7 +9,6 @@ on:
   push:
     branches: 
     - master
-    - feat/push-image-to-ecr
 
 env:
   OTP_VERSION: '24.3.4.1'

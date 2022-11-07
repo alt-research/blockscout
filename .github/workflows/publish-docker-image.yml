@@ -20,8 +20,6 @@ jobs:
   push_to_registry:
     name: Push docker image to registry
     runs-on: ubuntu-latest
-    outputs:
-      short-sha: ${{ steps.output-step.outputs.short-sha }}
 
     steps:
     - name: Check out the repo

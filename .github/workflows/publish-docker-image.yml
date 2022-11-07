@@ -51,6 +51,7 @@ jobs:
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
+      id: docker_build
       with:
         context: .
         file: ./docker/Dockerfile
@@ -72,4 +73,4 @@ jobs:
           SOCKET_ROOT=
 
     - name: Image digest
-      run: echo ${{ steps.blockscout_docker_build.outputs.digest }}
+      run: echo ${{ steps.docker_build.outputs.digest }}

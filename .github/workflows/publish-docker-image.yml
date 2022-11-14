@@ -30,6 +30,7 @@ jobs:
       uses: docker/setup-qemu-action@v2
 
     - name: Set up Docker Buildx
+      id: docker-builder
       uses: docker/setup-buildx-action@v2
 
     - name: Log in to ECR
@@ -57,6 +58,7 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         push: true
+        builder: ${{ steps.docker-builder.outputs.name }}
         cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache
         cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache,mode=max
         tags: ${{ steps.meta.outputs.tags }}

@@ -56,6 +56,8 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         push: true
+        cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache
+        cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache,mode=max
         tags: ${{ steps.meta.outputs.tags }}
         build-args: |
           CACHE_EXCHANGE_RATES_PERIOD=

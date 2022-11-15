@@ -46,8 +46,8 @@ jobs:
       with:
         # https://github.com/actions/cache/blob/main/examples.md#elixir---mix
         path: |
-          deps
-          _build
+          ${{ github.workspace }}/deps
+          ${{ github.workspace }}/_build
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: |
           ${{ runner.os }}-mix-
@@ -72,11 +72,11 @@ jobs:
         push: true
         builder: ${{ steps.docker-builder.outputs.name }}
         cache-from: |
-          type=local,src=/deps
-          type=local,src=/_build
+          type=local,src=${{ github.workspace }}/deps
+          type=local,src=${{ github.workspace }}/_build
         cache-to: |
-          type=local,dest=/deps
-          type=local,dest=/_build
+          type=local,dest=${{ github.workspace }}/deps
+          type=local,dest=${{ github.workspace }}/_build
         tags: ${{ steps.meta.outputs.tags }}
         build-args: |
           CACHE_EXCHANGE_RATES_PERIOD=

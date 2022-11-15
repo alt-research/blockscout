@@ -40,6 +40,18 @@ jobs:
         username: ${{ secrets.ECR_ACCESS_KEY_ID }}
         password: ${{ secrets.ECR_ACCESS_KEY }}
 
+    - name: Cache Buildx
+      uses: actions/cache@v3
+      id: buildx-cache
+      with:
+        # https://github.com/actions/cache/blob/main/examples.md#elixir---mix
+        path: |
+          deps
+          _build
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-mix-
+
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@v4
@@ -59,8 +71,12 @@ jobs:
         file: ./docker/Dockerfile
         push: true
         builder: ${{ steps.docker-builder.outputs.name }}
-        cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache
-        cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:buildcache,mode=max
+        cache-from: |
+          type=local,src=/deps
+          type=local,src=/_build
+        cache-to: |
+          type=local,dest=/deps
+          type=local,dest=/_build
         tags: ${{ steps.meta.outputs.tags }}
         build-args: |
           CACHE_EXCHANGE_RATES_PERIOD=

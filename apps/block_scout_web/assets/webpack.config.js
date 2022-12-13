@@ -48,6 +48,7 @@ const appJs =
       'address-logs': './js/pages/address/logs.js',
       'address-validations': './js/pages/address/validations.js',
       'validated-transactions': './js/pages/transactions.js',
+      'verified-contracts': './js/pages/verified_contracts.js',
       'pending-transactions': './js/pages/pending_transactions.js',
       'transaction': './js/pages/transaction.js',
       'verification-form': './js/pages/verification_form.js',
@@ -56,6 +57,7 @@ const appJs =
       'admin-tasks': './js/pages/admin/tasks.js',
       'token-contract': './js/pages/token_contract.js',
       'smart-contract-helpers': './js/lib/smart_contract/index.js',
+      'sol2uml': './js/pages/sol2uml.js',
       'token-transfers-toggle': './js/lib/token_transfers_toggle.js',
       'try-api': './js/lib/try_api.js',
       'try-eth-api': './js/lib/try_eth_api.js',
@@ -69,8 +71,10 @@ const appJs =
       'search-results': './js/pages/search-results/search.js',
       'token-overview': './js/pages/token/overview.js',
       'export-csv': './css/export-csv.scss',
-      'datepicker': './js/lib/datepicker.js',
-      'dropzone': './js/lib/dropzone.js'
+      'csv-download': './js/lib/csv_download.js',
+      'dropzone': './js/lib/dropzone.js',
+      'delete-item-handler': './js/pages/account/delete_item_handler.js',
+      'public-tags-request-form': './js/lib/public_tags_request_form.js'
     },
     output: {
       filename: '[name].js',
@@ -81,6 +85,10 @@ const appJs =
     },
     module: {
       rules: [
+        {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"],
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -156,11 +164,7 @@ const appJs =
       new ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
       new webpack.DefinePlugin({
         'process.env.SOCKET_ROOT': JSON.stringify(process.env.SOCKET_ROOT),
-        'process.env.NETWORK_PATH': JSON.stringify(process.env.NETWORK_PATH),
-        'process.env.CHAIN_ID': JSON.stringify(process.env.CHAIN_ID),
-        'process.env.JSON_RPC': JSON.stringify(process.env.JSON_RPC),
-        'process.env.SUBNETWORK': JSON.stringify(process.env.SUBNETWORK),
-        'process.env.COIN_NAME': JSON.stringify(process.env.COIN_NAME)
+        'process.env.NETWORK_PATH': JSON.stringify(process.env.NETWORK_PATH)
       }),
       new webpack.ProvidePlugin({
         process: 'process/browser',

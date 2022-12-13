@@ -11,7 +11,8 @@ config :explorer, Explorer.Repo,
   # Default of `5_000` was too low for `BlockFetcher` test
   ownership_timeout: :timer.minutes(7),
   timeout: :timer.seconds(60),
-  queue_target: 1000
+  queue_target: 1000,
+  migration_lock: nil
 
 # Configure API database
 config :explorer, Explorer.Repo.Replica1,
@@ -21,28 +22,21 @@ config :explorer, Explorer.Repo.Replica1,
   # Default of `5_000` was too low for `BlockFetcher` test
   ownership_timeout: :timer.minutes(1),
   timeout: :timer.seconds(60),
+  queue_target: 1000,
+  enable_caching_implementation_data_of_proxy: true,
+  avg_block_time_as_ttl_cached_implementation_data_of_proxy: false,
+  fallback_ttl_cached_implementation_data_of_proxy: :timer.seconds(20),
+  implementation_data_fetching_timeout: :timer.seconds(20)
+
+# Configure API database
+config :explorer, Explorer.Repo.Account,
+  database: "explorer_test_account",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  # Default of `5_000` was too low for `BlockFetcher` test
+  ownership_timeout: :timer.minutes(1),
+  timeout: :timer.seconds(60),
   queue_target: 1000
-
-config :explorer, Explorer.ExchangeRates, enabled: false, store: :ets, fetch_btc_value: true
-
-config :explorer, Explorer.Chain.Cache.BlockNumber, enabled: false
-
-config :explorer, Explorer.KnownTokens, enabled: false, store: :ets
-
-config :explorer, Explorer.Counters.AverageBlockTime, enabled: false
-
-config :explorer, Explorer.Counters.AddressesWithBalanceCounter, enabled: false, enable_consolidation: false
-
-# This historian is a GenServer whose init uses a Repo in a Task process.
-# This causes a ConnectionOwnership error
-config :explorer, Explorer.Chain.Transaction.History.Historian, enabled: false
-config :explorer, Explorer.Market.History.Historian, enabled: false
-
-config :explorer, Explorer.Counters.AddressesCounter, enabled: false, enable_consolidation: false
-
-config :explorer, Explorer.Market.History.Cataloger, enabled: false
-
-config :explorer, Explorer.Tracer, disabled?: false
 
 config :logger, :explorer,
   level: :warn,
@@ -50,20 +44,3 @@ config :logger, :explorer,
 
 config :explorer, Explorer.ExchangeRates.Source.TransactionAndLog,
   secondary_source: Explorer.ExchangeRates.Source.OneCoinSource
-
-config :explorer,
-  realtime_events_sender: Explorer.Chain.Events.SimpleSender
-
-variant =
-  if is_nil(System.get_env("ETHEREUM_JSONRPC_VARIANT")) do
-    "parity"
-  else
-    System.get_env("ETHEREUM_JSONRPC_VARIANT")
-    |> String.split(".")
-    |> List.last()
-    |> String.downcase()
-  end
-
-# Import variant specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "test/#{variant}.exs"

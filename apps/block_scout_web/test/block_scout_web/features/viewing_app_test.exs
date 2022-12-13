@@ -27,7 +27,7 @@ defmodule BlockScoutWeb.ViewingAppTest do
   #     |> insert()
   #     |> with_block(block)
 
-  #     assert Decimal.compare(Explorer.Chain.indexed_ratio(), Decimal.from_float(0.5)) == :eq
+  #     assert Decimal.compare(Explorer.Chain.indexed_ratio_blocks(), Decimal.from_float(0.5)) == :eq
 
   #     insert(:pending_block_operation, block_hash: block.hash, fetch_internal_transactions: true)
 
@@ -46,13 +46,13 @@ defmodule BlockScoutWeb.ViewingAppTest do
   #     |> insert()
   #     |> with_block(block)
 
-  #     assert Decimal.compare(Explorer.Chain.indexed_ratio(), 1) == :eq
+  #     assert Decimal.compare(Explorer.Chain.indexed_ratio_blocks(), 1) == :eq
 
   #     insert(:pending_block_operation, block_hash: block.hash, fetch_internal_transactions: true)
 
   #     session
   #     |> AppPage.visit_page()
-  #     |> assert_has(AppPage.indexed_status("Indexing Tokens"))
+  #     |> assert_has(AppPage.indexed_status("Indexing Internal Transactions"))
   #   end
 
   #   test "updates blocks indexed percentage", %{session: session} do
@@ -67,7 +67,7 @@ defmodule BlockScoutWeb.ViewingAppTest do
 
   #     BlocksIndexedCounter.calculate_blocks_indexed()
 
-  #     assert Decimal.compare(Explorer.Chain.indexed_ratio(), Decimal.from_float(0.5)) == :eq
+  #     assert Decimal.compare(Explorer.Chain.indexed_ratio_blocks(), Decimal.from_float(0.5)) == :eq
 
   #     insert(:pending_block_operation, block_hash: block.hash, fetch_internal_transactions: true)
 
@@ -106,7 +106,7 @@ defmodule BlockScoutWeb.ViewingAppTest do
 
   #     BlocksIndexedCounter.calculate_blocks_indexed()
 
-  #     assert_has(session, AppPage.indexed_status("Indexing Tokens"))
+  #     assert_has(session, AppPage.indexed_status("Indexing Internal Transactions"))
   #   end
 
   #   test "removes message when chain is indexed", %{session: session} do
@@ -125,11 +125,11 @@ defmodule BlockScoutWeb.ViewingAppTest do
 
   #     BlocksIndexedCounter.calculate_blocks_indexed()
 
-  #     assert Decimal.compare(Explorer.Chain.indexed_ratio(), 1) == :eq
+  #     assert Decimal.compare(Explorer.Chain.indexed_ratio_blocks(), 1) == :eq
 
   #     session
   #     |> AppPage.visit_page()
-  #     |> assert_has(AppPage.indexed_status("Indexing Tokens"))
+  #     |> assert_has(AppPage.indexed_status("Indexing Internal Transactions"))
 
   #     Repo.update_all(
   #       from(p in PendingBlockOperation, where: p.block_hash == ^block_hash),

@@ -44,12 +44,11 @@ ADD apps/indexer/mix.exs ./apps/indexer/
 
 RUN mix do deps.get, local.rebar --force, deps.compile
 
-ADD . .
-
-RUN sed -i "/msgid \"Chat (#blockscout)\"/{n;s/msgstr \"\"/msgstr \"Chat (#altlayer)\"/g}" apps/block_scout_web/priv/gettext/default.pot; \
-    sed -i "/msgid \"Chat (#blockscout)\"/{n;s/msgstr \"\"/msgstr \"Chat (#altlayer)\"/g}" apps/block_scout_web/priv/gettext/en/LC_MESSAGES/default.po;
-
 COPY . .
+
+RUN sed -i "s/\"Chat (#blockscout)\"/\"Chat (#altlayer)\"/g" apps/block_scout_web/priv/gettext/default.pot; \
+    sed -i "s/\"Chat (#blockscout)\"/\"Chat (#altlayer)\"/g" apps/block_scout_web/lib/block_scout_web/templates/layout/_footer.html.eex; \
+    sed -i "s/\"Chat (#blockscout)\"/\"Chat (#altlayer)\"/g" apps/block_scout_web/priv/gettext/en/LC_MESSAGES/default.po;
 
 # Run forderground build and phoenix digest
 RUN mix compile && npm install npm@latest

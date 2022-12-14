@@ -37,7 +37,7 @@ defmodule Indexer.Temporary.UncatalogedTokenTransfers do
 
   def init(opts) do
     sup_pid = Keyword.fetch!(opts, :supervisor)
-    retry_interval = Keyword.get(opts, :retry_interval, 10_000)
+    retry_interval = Keyword.get(opts, :retry_interval, 300)
 
     send(self(), :scan)
 

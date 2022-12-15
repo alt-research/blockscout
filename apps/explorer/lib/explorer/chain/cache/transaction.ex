@@ -28,16 +28,17 @@ defmodule Explorer.Chain.Cache.Transaction do
   def estimated_count do
     cached_value = __MODULE__.get_count()
 
-    result_estimated_count = if is_nil(cached_value) do
-      %Postgrex.Result{rows: [[rows]]} =
-        SQL.query!(Repo, "SELECT reltuples::BIGINT AS estimate FROM pg_class WHERE relname='transactions'")
+    result_estimated_count =
+      if is_nil(cached_value) do
+        %Postgrex.Result{rows: [[rows]]} =
+          SQL.query!(Repo, "SELECT reltuples::BIGINT AS estimate FROM pg_class WHERE relname='transactions'")
 
-      rows
-    else
-      cached_value
-    end
+        rows
+      else
+        cached_value
+      end
 
-    if result_estimated_count < 100000 do
+    if result_estimated_count < 100_000 do
       # use no estimate count when the tx is less
       %Postgrex.Result{rows: [[rows]]} =
         SQL.query!(Repo, "SELECT count(*) AS estimate FROM public.transactions WHERE block_number>0")

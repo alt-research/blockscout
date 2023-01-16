@@ -27,7 +27,7 @@ defmodule Indexer.Block.Catchup.FetcherTest do
         transport: EthereumJSONRPC.Mox,
         transport_options: [],
         # Which one does not matter, so pick one
-        variant: EthereumJSONRPC.Parity
+        variant: EthereumJSONRPC.Nethermind
       ]
     }
   end
@@ -126,6 +126,7 @@ defmodule Indexer.Block.Catchup.FetcherTest do
     test "ignores fetched beneficiaries with different hash for same number", %{
       json_rpc_named_arguments: json_rpc_named_arguments
     } do
+      Application.put_env(:indexer, Indexer.Block.Catchup.Fetcher, batch_size: 1, concurrency: 10)
       CoinBalance.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       InternalTransaction.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       Token.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
@@ -264,7 +265,6 @@ defmodule Indexer.Block.Catchup.FetcherTest do
 
       assert %{first_block_number: ^block_number, last_block_number: 0, missing_block_count: 2, shrunk: false} =
                Fetcher.task(%Fetcher{
-                 blocks_batch_size: 1,
                  block_fetcher: %Block.Fetcher{
                    callback_module: Fetcher,
                    json_rpc_named_arguments: json_rpc_named_arguments
@@ -280,6 +280,7 @@ defmodule Indexer.Block.Catchup.FetcherTest do
     test "async fetches beneficiaries when individual responses error out", %{
       json_rpc_named_arguments: json_rpc_named_arguments
     } do
+      Application.put_env(:indexer, Indexer.Block.Catchup.Fetcher, batch_size: 1, concurrency: 10)
       CoinBalance.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       InternalTransaction.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       Token.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
@@ -413,7 +414,6 @@ defmodule Indexer.Block.Catchup.FetcherTest do
 
       assert %{first_block_number: ^block_number, last_block_number: 0, missing_block_count: 2, shrunk: false} =
                Fetcher.task(%Fetcher{
-                 blocks_batch_size: 1,
                  block_fetcher: %Block.Fetcher{
                    callback_module: Fetcher,
                    json_rpc_named_arguments: json_rpc_named_arguments
@@ -431,6 +431,7 @@ defmodule Indexer.Block.Catchup.FetcherTest do
     test "async fetches beneficiaries when entire call errors out", %{
       json_rpc_named_arguments: json_rpc_named_arguments
     } do
+      Application.put_env(:indexer, Indexer.Block.Catchup.Fetcher, batch_size: 1, concurrency: 10)
       CoinBalance.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       InternalTransaction.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
       Token.Supervisor.Case.start_supervised!(json_rpc_named_arguments: json_rpc_named_arguments)
@@ -557,7 +558,6 @@ defmodule Indexer.Block.Catchup.FetcherTest do
 
       assert %{first_block_number: ^block_number, last_block_number: 0, missing_block_count: 2, shrunk: false} =
                Fetcher.task(%Fetcher{
-                 blocks_batch_size: 1,
                  block_fetcher: %Block.Fetcher{
                    callback_module: Fetcher,
                    json_rpc_named_arguments: json_rpc_named_arguments
@@ -569,6 +569,57 @@ defmodule Indexer.Block.Catchup.FetcherTest do
       assert count(Reward) == 0
 
       assert_receive {:block_numbers, [^block_number]}, 5_000
+    end
+  end
+
+  describe "block_ranges/0" do
+    setup do
+      initial_env = Application.get_all_env(:indexer)
+      on_exit(fn -> Application.put_all_env([{:indexer, initial_env}]) end)
+    end
+
+    test "ignores bad ranges", %{
+      json_rpc_named_arguments: json_rpc_named_arguments
+    } do
+      EthereumJSONRPC.Mox
+      |> expect(:json_rpc, fn %{method: "eth_getBlockByNumber", params: ["latest", false]}, _options ->
+        {:ok, %{"number" => "0x100"}}
+      end)
+
+      # doing such workaround is safe since this module is not async
+      Application.put_env(:indexer, :block_ranges, "1..5,3..5,2qw1..12,10..11a,,asd..qwe,10..latest")
+      # latest block is left for realtime_index
+      assert Fetcher.block_ranges(json_rpc_named_arguments) == {:ok, [1..5, 10..255]}
+    end
+
+    test "ignores FIRST_BLOCK/LAST_BLOCK when BLOCK_RANGES defined", %{
+      json_rpc_named_arguments: json_rpc_named_arguments
+    } do
+      Application.put_env(:indexer, :first_block, "1")
+      Application.put_env(:indexer, :last_block, "10")
+      Application.put_env(:indexer, :block_ranges, "2..5,10..100")
+      assert Fetcher.block_ranges(json_rpc_named_arguments) == {:ok, [2..5, 10..100]}
+    end
+
+    test "uses FIRST_BLOCK/LAST_BLOCK when BLOCK_RANGES is undefined or invalid", %{
+      json_rpc_named_arguments: json_rpc_named_arguments
+    } do
+      Application.put_env(:indexer, :first_block, "1")
+      Application.put_env(:indexer, :last_block, "10")
+      assert Fetcher.block_ranges(json_rpc_named_arguments) == {:ok, [1..9]}
+
+      Application.put_env(:indexer, :block_ranges, "latest..123,,fvdskvjglav!@#$%^&,2..1")
+      assert Fetcher.block_ranges(json_rpc_named_arguments) == {:ok, [1..9]}
+    end
+
+    test "all ranges are disjoint", %{json_rpc_named_arguments: json_rpc_named_arguments} do
+      EthereumJSONRPC.Mox
+      |> expect(:json_rpc, fn %{method: "eth_getBlockByNumber", params: ["latest", false]}, _options ->
+        {:ok, %{"number" => "0x100"}}
+      end)
+
+      Application.put_env(:indexer, :block_ranges, "10..20,5..15,18..25,35..40,30..50,100..latest,150..200")
+      assert Fetcher.block_ranges(json_rpc_named_arguments) == {:ok, [5..25, 30..50, 100..255]}
     end
   end
 

@@ -38,6 +38,7 @@ ADD . .
 
 ARG COIN_PARAM='ALT'
 ENV COIN=$COIN_PARAM
+ENV COIN_NAME=$COIN_PARAM
 
 RUN sed -i s/"POA"/"${COIN}"/g apps/block_scout_web/priv/gettext/en/LC_MESSAGES/default.po; \
     sed -i "/msgid \"Ether\"/{n;s/msgstr \"\"/msgstr \"${COIN}\"/g}" apps/block_scout_web/priv/gettext/default.pot; \

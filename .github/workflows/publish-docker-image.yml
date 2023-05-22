@@ -61,17 +61,6 @@ jobs:
           type=raw,value={{branch}}-{{sha}}-alt
           type=raw,value=latest-alt,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta_eth
-      uses: docker/metadata-action@v4
-      with:
-        images: |
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
-        tags: |
-          type=raw,value={{sha}}-eth
-          type=raw,value={{branch}}-{{sha}}-eth
-          type=raw,value=latest-eth,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
-
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       id: docker_build_ALT
@@ -101,6 +90,17 @@ jobs:
           CACHE_BRIDGE_MARKET_CAP_UPDATE_INTERVAL=
           SOCKET_ROOT=
 
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta_eth
+      uses: docker/metadata-action@v4
+      with:
+        images: |
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+        tags: |
+          type=raw,value={{sha}}-eth
+          type=raw,value={{branch}}-{{sha}}-eth
+          type=raw,value=latest-eth,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       id: docker_build_ETH
@@ -116,6 +116,46 @@ jobs:
         tags: ${{ steps.meta_eth.outputs.tags }}
         build-args: |
           COIN_PARAM=ETH
+          CACHE_EXCHANGE_RATES_PERIOD=
+          DISABLE_READ_API=false
+          API_PATH=
+          NETWORK_PATH=
+          DISABLE_WEBAPP=false
+          DISABLE_WRITE_API=false
+          CACHE_ENABLE_TOTAL_GAS_USAGE_COUNTER=
+          WOBSERVER_ENABLED=false
+          ADMIN_PANEL_ENABLED=false
+          CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL=
+          DISABLE_BRIDGE_MARKET_CAP_UPDATER=false
+          CACHE_BRIDGE_MARKET_CAP_UPDATE_INTERVAL=
+          SOCKET_ROOT=
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta_carriercoo
+      uses: docker/metadata-action@v4
+      with:
+        images: |
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+        tags: |
+          type=raw,value={{sha}}-carriercoo
+          type=raw,value={{branch}}-{{sha}}-carriercoo
+          type=raw,value=latest-carriercoo,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      id: docker_build_HOM
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        push: true
+        builder: ${{ steps.docker-builder.outputs.name }}
+        cache-from: |
+          type=local,src=${{ github.workspace }}/deps
+        cache-to: |
+          type=local,dest=${{ github.workspace }}/deps
+        tags: ${{ steps.meta_carriercoo.outputs.tags }}
+        build-args: |
+          COIN_PARAM=HOM
           CACHE_EXCHANGE_RATES_PERIOD=
           DISABLE_READ_API=false
           API_PATH=

@@ -250,5 +250,45 @@ jobs:
           CACHE_BRIDGE_MARKET_CAP_UPDATE_INTERVAL=
           SOCKET_ROOT=
 
+    - name: Extract metadata (tags, labels) for Docker (CELL)
+      id: meta_cell
+      uses: docker/metadata-action@v4
+      with:
+        images: |
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+        tags: |
+          type=raw,value={{sha}}-cell
+          type=raw,value={{branch}}-{{sha}}-cell
+          type=raw,value=latest-cell,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+
+    - name: Build and push Docker image (CELL)
+      uses: docker/build-push-action@v3
+      id: docker_build_cell
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        push: true
+        builder: ${{ steps.docker-builder.outputs.name }}
+        cache-from: |
+          type=local,src=${{ github.workspace }}/deps
+        cache-to: |
+          type=local,dest=${{ github.workspace }}/deps
+        tags: ${{ steps.meta_cell.outputs.tags }}
+        build-args: |
+          COIN_PARAM=CELL
+          CACHE_EXCHANGE_RATES_PERIOD=
+          DISABLE_READ_API=false
+          API_PATH=
+          NETWORK_PATH=
+          DISABLE_WEBAPP=false
+          DISABLE_WRITE_API=false
+          CACHE_ENABLE_TOTAL_GAS_USAGE_COUNTER=
+          WOBSERVER_ENABLED=false
+          ADMIN_PANEL_ENABLED=false
+          CACHE_ADDRESS_WITH_BALANCES_UPDATE_INTERVAL=
+          DISABLE_BRIDGE_MARKET_CAP_UPDATER=false
+          CACHE_BRIDGE_MARKET_CAP_UPDATE_INTERVAL=
+          SOCKET_ROOT=
+
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}

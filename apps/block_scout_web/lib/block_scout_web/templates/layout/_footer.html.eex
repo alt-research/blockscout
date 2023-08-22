@@ -1,13 +1,13 @@
-<div style="padding: calc(5600vw / 1440) calc(12000vw / 1440); box-shadow: 0px 0px 1em rgba(45, 21, 4, 0.08); border-top-left-radius: calc(4000vw / 1440); border-top-right-radius: calc(4000vw / 1440); gap: calc(2800vw / 1440); display: grid">
-  <div style="gap: calc(12000vw / 1440); display: flex">
-    <div style="flex: 1; padding-top: calc(1200vw / 1440); gap: calc(1600vw / 1440); display: grid">
-      <div style="align-items: center; gap: calc(1400vw / 1440); display: flex">
+<div style="margin: 0 auto; width: min(100vw, 1440px); font-size: min(16px, 1600vw / 1440); padding: calc(56em / 16) calc(120em / 16); gap: calc(28em / 16); display: grid">
+  <div style="gap: 7.5em; display: flex">
+    <div style="flex: 1; padding-top: calc(12em / 16); gap: 1em; display: grid">
+      <div style="align-items: center; gap: calc(14em / 16); display: flex">
         <img src="<%= static_path(@conn, logo_footer()) %>">
       </div>
-      <div style="gap: calc(1600vw / 1440); display: grid">
-        <div style="opacity: 0.66; color: #3D3D3D; font-size: calc(1600vw / 1440);">A product by Automata Network</div>
+      <div style="gap: 1em; display: grid">
+        <div style="opacity: 0.66; color: #3D3D3D">A product by Automata Network</div>
       </div>
-      <div style="flex: 1; align-items: end; gap: calc(2000vw / 1440); display: flex">
+      <div style="flex: 1; align-items: end; gap: 1.25em; display: flex">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
   <path opacity="0.33" d="M21.8182 2.13513C21.0158 2.49594 20.1539 2.73973 19.2478 2.84992C20.1827 2.28218 20.8822 1.38861 21.2157 0.33596C20.3373 0.865461 19.3759 1.23817 18.3734 1.43789C17.6992 0.707364 16.8062 0.22316 15.8331 0.0604525C14.8599 -0.102255 13.8611 0.0656378 12.9916 0.538065C12.1221 1.01049 11.4306 1.76102 11.0245 2.67313C10.6185 3.58523 10.5204 4.60789 10.7457 5.58232C8.96585 5.49162 7.22465 5.02214 5.63512 4.20432C4.0456 3.38651 2.64328 2.23865 1.51918 0.835242C1.13482 1.5081 0.913815 2.28823 0.913815 3.11906C0.913387 3.86701 1.09488 4.60349 1.44219 5.26318C1.78951 5.92286 2.2919 6.48535 2.9048 6.90073C2.194 6.87778 1.49888 6.68287 0.877301 6.33221V6.39072C0.87723 7.43974 1.23479 8.45648 1.8893 9.26841C2.54382 10.0803 3.45498 10.6375 4.46818 10.8453C3.8088 11.0264 3.11748 11.053 2.44645 10.9233C2.73231 11.8259 3.28915 12.6152 4.03901 13.1807C4.78887 13.7462 5.69421 14.0595 6.62828 14.0769C5.04264 15.3402 3.08438 16.0254 1.06852 16.0224C0.711432 16.0225 0.354645 16.0013 0 15.959C2.04621 17.2941 4.42815 18.0027 6.86082 18C15.0957 18 19.5975 11.0783 19.5975 5.07523C19.5975 4.8802 19.5927 4.68322 19.5841 4.48819C20.4598 3.84553 21.2156 3.04973 21.8163 2.13805L21.8182 2.13513Z" fill="#3D3D3D"/>
 </svg>
@@ -25,37 +25,45 @@
 </svg>
       </div>
     </div>
-    <div style="gap: calc(1600vw / 1440); display: grid">
-      <div style="height: calc(3600vw / 1440); color: #3D3D3D; font-size: calc(2000vw / 1440); font-weight: 600;">Product</div>
-      <div style="gap: calc(1600vw / 1440); display: grid; font-size: calc(1600vw / 1440)">
+    <div style="gap: 1em; display: grid">
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Product</div>
+      <div style="gap: 1em; display: grid">
         <div style="opacity: 0.66; color: #3D3D3D;">Terms of Use</div>
         <div style="opacity: 0.66; color: #3D3D3D;">Privacy Policy</div>
         <div style="opacity: 0.66; color: #3D3D3D;">Documentation</div>
       </div>
     </div>
-    <div style="gap: calc(1600vw / 1440); display: grid">
-      <div style="height: calc(3600vw / 1440); color: #3D3D3D; font-size: calc(2000vw / 1440); font-weight: 600;">Company</div>
-      <div style="gap: calc(1600vw / 1440); display: grid; font-size: calc(1600vw / 1440)">
+    <div style="gap: 1em; display: grid">
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Company</div>
+      <div style="gap: 1em; display: grid">
         <div style="opacity: 0.66; color: #3D3D3D;">About</div>
         <div style="opacity: 0.66; color: #3D3D3D;">Blog</div>
         <div>🚀 <span style="color: #E06612;">Careers</span></div>
       </div>
     </div>
-    <div style="gap: calc(1600vw / 1440); display: grid">
-      <div style="height: calc(3600vw / 1440); color: #3D3D3D; font-size: calc(2000vw / 1440); font-weight: 600;">Connect</div>
-      <div style="gap: calc(1600vw / 1440); display: grid; font-size: calc(1600vw / 1440)">
+    <div style="gap: 1em; display: grid">
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Connect</div>
+      <div style="gap: 1em; display: grid">
         <div style="opacity: 0.66; color: #3D3D3D;">Twitter</div>
         <div style="opacity: 0.66; color: #3D3D3D;">Discord</div>
         <div style="opacity: 0.66; color: #3D3D3D;">Telegram</div>
       </div>
     </div>
   </div>
-  <div style="align-self: stretch; height: 0px; border: 0.75px #3D3D3D solid"></div>
-  <div style="justify-content: flex-start; align-items: center; gap: 8px; display: inline-flex">
-    <div style="opacity: 0.50; color: #0A1320; font-size: 14px;">Copyright © 2023 Automata · All rights reserved ·</div>
-    <div style="justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-      <div style="color: #E06612; font-size: 14px; font-weight: 500;">Status</div>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="2" viewBox="0 0 1202 2" fill="none">
+  <path d="M1 1H1201" stroke="url(#paint0_linear_14_11404)" stroke-width="1.5" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="paint0_linear_14_11404" x1="1" y1="1" x2="15.1574" y2="131.071" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3D3D3D" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#3D3D3D" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+  <div style="align-items: center; gap: .5em; display: flex">
+    <div style="opacity: 0.50; color: #0A1320; font-size: .875em;">Copyright © 2023 Automata · All rights reserved ·</div>
+    <div style="align-items: center; gap: .25em; display: flex">
+      <div style="color: #E06612; font-size: .875em; font-weight: 500;">Status</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 16 16" fill="none">
   <g opacity="0.66">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M3.39998 4.4001C3.0686 4.4001 2.79998 4.66873 2.79998 5.0001V11.8001C2.79998 12.1315 3.0686 12.4001 3.39998 12.4001H10.2C10.5313 12.4001 10.8 12.1315 10.8 11.8001V8.6001C10.8 8.26873 11.0686 8.0001 11.4 8.0001C11.7313 8.0001 12 8.26873 12 8.6001V11.8001C12 12.7942 11.1941 13.6001 10.2 13.6001H3.39998C2.40586 13.6001 1.59998 12.7942 1.59998 11.8001V5.0001C1.59998 4.00599 2.40586 3.2001 3.39998 3.2001H7.39998C7.73135 3.2001 7.99998 3.46873 7.99998 3.8001C7.99998 4.13147 7.73135 4.4001 7.39998 4.4001H3.39998Z" fill="#E06612"/>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.95505 10.2026C5.17738 10.4484 5.5568 10.4673 5.80252 10.245L13.2 3.55209V5.8001C13.2 6.13147 13.4686 6.4001 13.8 6.4001C14.1313 6.4001 14.4 6.13147 14.4 5.8001V2.2001C14.4 1.86873 14.1313 1.6001 13.8 1.6001H10.2C9.8686 1.6001 9.59998 1.86873 9.59998 2.2001C9.59998 2.53147 9.8686 2.8001 10.2 2.8001H12.2425L4.99743 9.35518C4.7517 9.5775 4.73273 9.95692 4.95505 10.2026Z" fill="#E06612"/>

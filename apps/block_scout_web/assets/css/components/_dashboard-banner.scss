@@ -1,8 +1,6 @@
 $dashboard-banner-gradient-start: $primary !default;
-$dashboard-banner-gradient-end: lighten(
-  $dashboard-banner-gradient-start,
-  5%
-) !default;
+$dashboard-banner-gradient-end: lighten($dashboard-banner-gradient-start,
+    5%) !default;
 $dashboard-banner-network-plain-container-background-color: lighten($dashboard-banner-gradient-end, 5%) !default;
 $dashboard-line-color-price: lighten($dashboard-banner-gradient-end, 5%) !default;
 $dashboard-line-color-price-dark-theme: lighten($dashboard-banner-gradient-end, 5%) !default;
@@ -26,11 +24,13 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
   padding: 0;
   position: relative;
   height: 264px;
+
   @include media-breakpoint-down(sm) {
-      height: auto;
+    height: auto;
   }
+
   @include media-breakpoint-down(md) {
-      height: auto;
+    height: auto;
   }
 }
 
@@ -78,7 +78,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
     max-width: 100%;
   }
 
-  > canvas {
+  >canvas {
     max-height: 100%;
     max-width: 100%;
     width: 100%;
@@ -93,7 +93,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
   display: grid;
   grid-template-columns: 0.6fr 0.9fr 0.9fr 0.9fr;
   padding-bottom: 12px;
-  padding-left:20px;
+  padding-left: 20px;
 
   @include media-breakpoint-down(sm) {
     grid-template-columns: 1fr 1fr;
@@ -145,7 +145,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
 
     &.market-cap-per-day {
       &::before {
-        background-color:$dashboard-line-color-market;
+        background-color: $dashboard-line-color-market;
       }
     }
 
@@ -193,6 +193,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
   .gas-price-icon {
     position: relative;
     top: -2px;
+
     path {
       fill: $dashboard-line-color-price;
     }
@@ -226,7 +227,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
     max-width: 100%;
     padding: 20px 0 20px 20px;
     width: 250px;
-    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.1);
   }
 
   @include media-breakpoint-down(sm) {
@@ -243,7 +244,7 @@ $dashboard-banner-chart-axis-font-color-alt: #333;
     position: absolute;
     width: 9999px;
     z-index: -1;
-    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.1);
     border-top-left-radius: 10px;
 
     @include media-breakpoint-down(md) {

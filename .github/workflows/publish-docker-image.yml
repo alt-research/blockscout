@@ -75,7 +75,7 @@ jobs:
           type=local,dest=${{ github.workspace }}/deps
         tags: ${{ steps.meta_SEP.outputs.tags }}
         build-args: |
-          COIN_PARAM=SEP
+          COIN_PARAM=ETH
           CACHE_EXCHANGE_RATES_PERIOD=
           DISABLE_READ_API=false
           API_PATH=

@@ -5,7 +5,7 @@
         <img src="<%= static_path(@conn, logo_footer()) %>">
       </div>
       <div style="gap: 1em; display: grid">
-        <div style="opacity: 0.66; color: #3D3D3D">A product by Automata Network</div>
+        <div style="opacity: 0.66; color: #3D3D3D">Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for the Automata Network.</div>
       </div>
       <div style="flex: 1; align-items: end; gap: 1.25em; display: flex">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
@@ -50,6 +50,7 @@
       </div>
     </div>
   </div>
+  <!--
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="2" viewBox="0 0 1202 2" fill="none">
   <path d="M1 1H1201" stroke="url(#paint0_linear_14_11404)" stroke-width="1.5" stroke-linecap="round"/>
   <defs>
@@ -71,4 +72,5 @@
 </svg>
     </div>
   </div>
+  -->
 </div>

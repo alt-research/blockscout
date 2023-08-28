@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
+    <title>Automata Explorer</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="keywords" content="Automata blockchain, attestation explorer, api, analytics, address, smart contract">
+    <meta name="description" content="Find out the latest blocks and transactions with Automata Explorer to find the price,average block time, total transactions, total blocks, wallet addresses and more.">
 
     <%= case @view_module do %>
       <% Elixir.BlockScoutWeb.ChainView -> %>
@@ -23,6 +26,7 @@
     <link rel="preload" href="<%= static_path(@conn, "/images/icons/fontawesome/tag.svg") %>" as="image" crossorigin>
     <link rel="preload" href="<%= static_path(@conn, "/css/non-critical.css") %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/non-critical.css") %>">
+    <link rel="canonical" href="https://explorer.ata.network/">
     <%= render_existing(@view_module, "styles.html", assigns) %>
 
     <link rel="apple-touch-icon" sizes="180x180" href="<%= static_path(@conn, "/apple-touch-icon.png") %>">
@@ -35,6 +39,22 @@
     <meta name="msapplication-config" content="<%= static_path(@conn, "/browserconfig.xml") %>">
     <meta name="theme-color" content="#ffffff">
 
+    <meta property="og:image" content="<%= static_path(@conn, "/explorer.png") %>">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="800">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Automata Explorer">
+    <meta property="og:description" content="Find out the latest blocks and transactions with Automata Explorer to find the price, average block time, total transactions, total blocks, wallet addresses and more.">
+    <meta property="og:url" content="https://explorer.ata.network/">
+    <meta property="og:site_name" content="Automata Explorer">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="https://explorer.ata.network/">
+    <meta property="twitter:url" content="https://explorer.ata.network/">
+    <meta name="twitter:title" content="Automata Explorer">
+    <meta name="twitter:description" content="Find out the latest blocks and transactions with Automata Explorer to find the price, average block time, total transactions, total blocks, wallet addresses and more.">
+    <meta name="twitter:image" content="<%= static_path(@conn, "/explorer.png") %>">
     <%= render_existing(@view_module, "_metatags.html", assigns) || render("_default_title.html") %>
 
     <script defer data-cfasync="false">

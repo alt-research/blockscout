@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
     <meta name="keywords" content="Automata blockchain, attestation explorer, api, analytics, address, smart contract">
-    <meta name="description" content="Find out the latest blocks and transactions with Automata Explorer to find the price,average block time, total transactions, total blocks, wallet addresses and more.">
+    <meta name="description" content="Find out the latest blocks and transactions with Automata Explorer to find the price, average block time, total transactions, total blocks, wallet addresses and more.">
 
     <%= case @view_module do %>
       <% Elixir.BlockScoutWeb.ChainView -> %>

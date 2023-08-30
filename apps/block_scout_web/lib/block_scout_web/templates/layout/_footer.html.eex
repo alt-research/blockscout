@@ -1,5 +1,5 @@
 <div style="margin: 0 auto; width: min(100vw, 1440px); font-size: min(16px, 1600vw / 1440); padding: calc(56em / 16) calc(120em / 16); gap: calc(28em / 16); display: grid">
-  <div style="gap: 7.5em; display: flex">
+  <div style="gap: 7.5em; display: flex; place-items: start">
     <div style="flex: 1; padding-top: calc(12em / 16); gap: 1em; display: grid">
       <div style="align-items: center; gap: calc(14em / 16); display: flex">
         <img src="<%= static_path(@conn, logo_footer()) %>">
@@ -26,27 +26,29 @@
       </div>
     </div>
     <div style="gap: 1em; display: grid">
-      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Product</div>
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">About</div>
       <div style="gap: 1em; display: grid">
-        <div style="opacity: 0.66; color: #3D3D3D;">Terms of Use</div>
-        <div style="opacity: 0.66; color: #3D3D3D;">Privacy Policy</div>
-        <div style="opacity: 0.66; color: #3D3D3D;">Documentation</div>
+        <a href="https://www.ata.network" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Automata</a>
+        <a href="https://blog.ata.network" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Blog</a>
+        <div style="opacity: 0.66; color: #3D3D3D;">Docs</div>
+        <a href="https://ata.careers" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Careers</a>
+        <a href="https://mirror.xyz/0xd0A0012b360B92A14c655A3fD60cfC52A99353e4" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Newsletter</a>
       </div>
     </div>
     <div style="gap: 1em; display: grid">
-      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Company</div>
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Products</div>
       <div style="gap: 1em; display: grid">
-        <div style="opacity: 0.66; color: #3D3D3D;">About</div>
-        <div style="opacity: 0.66; color: #3D3D3D;">Blog</div>
-        <div>🚀 <span style="color: #E06612;">Careers</span></div>
+        <a href="https://www.1rpc.io/" target="_blank" style="opacity: 0.66; color: #3D3D3D;">1RPC</a>
+        <a href="https://www.carrier.so/" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Carrier</a>
       </div>
     </div>
     <div style="gap: 1em; display: grid">
-      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Connect</div>
+      <div style="height: calc(36rem / 16); color: #3D3D3D; font-size: 1.25em; font-weight: 600;">Socials</div>
       <div style="gap: 1em; display: grid">
-        <div style="opacity: 0.66; color: #3D3D3D;">Twitter</div>
-        <div style="opacity: 0.66; color: #3D3D3D;">Discord</div>
-        <div style="opacity: 0.66; color: #3D3D3D;">Telegram</div>
+        <a href="https://ata.ws/twitter" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Twitter</a>
+        <a href="http://ata.ws/telegram" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Telegram</a>
+        <a href="http://ata.ws/discord" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Discord</a>
+        <a href="http://ata.ws/github" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Github</a>
       </div>
     </div>
   </div>

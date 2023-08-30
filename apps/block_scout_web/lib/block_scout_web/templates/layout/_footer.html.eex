@@ -20,7 +20,7 @@
       <div style="gap: 1em; display: grid">
         <a href="https://www.ata.network" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Automata</a>
         <a href="https://blog.ata.network" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Blog</a>
-        <div style="opacity: 0.66; color: #3D3D3D;">Docs</div>
+        <a href="https://docs.ata.network/protocol/explorer" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Docs</a>
         <a href="https://ata.careers" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Careers</a>
         <a href="https://mirror.xyz/0xd0A0012b360B92A14c655A3fD60cfC52A99353e4" target="_blank" style="opacity: 0.66; color: #3D3D3D;">Newsletter</a>
       </div>

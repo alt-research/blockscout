@@ -66,7 +66,7 @@
                 <source src=<%= media_src(@token_instance.instance, true) %> type="video/mp4">
               </video>
             <% else %>
-              <img src=<%= media_src(@token_instance.instance, true) %> />
+              <img id="ata_nft" src=<%= media_src(@token_instance.instance, true) %> />
             <% end %>
           </div>
         </div>

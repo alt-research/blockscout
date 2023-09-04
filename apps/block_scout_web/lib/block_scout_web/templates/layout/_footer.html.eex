@@ -119,4 +119,23 @@ function go() {
 
 go();
 window.addEventListener('resize', go);
+
+const provider = new ethers.providers.JsonRpcProvider("https://1rpc.io/ata/testnet");
+const PFX = 'data:application/json;base64,';
+const N = PFX.length;
+(async function() {
+  const url = window.location.href;
+  const match = url.match(/\/token\/(0x.*)\/instance\/(.*)\//);
+  const img = document.getElementById('ata_nft');
+  if (!match || !img || !img.src.endsWith("/images/controller.svg")) return;
+
+  const [, addr, id] = match;
+  const contract = new ethers.Contract(addr, [
+    "function tokenURI(uint256 tokenId) public view returns (string memory)"
+  ], provider);
+  const uri = await contract.tokenURI(id);
+  if (!uri.startsWith(PFX)) return;
+  const {image} = JSON.parse(atob(uri.slice(N)));
+  if (image) img.src = image;
+})();
 </script>
